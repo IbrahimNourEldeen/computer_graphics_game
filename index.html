@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icy Tower Clone</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="main-menu" class="menu">
+            <h1 class="game-title">ICY TOWER</h1>
+            <div class="high-score">High Score: <span id="high-score">0</span></div>
+            <button id="start-button" class="menu-button">START GAME</button>
+            <div class="controls-info">
+                <p>← → Arrow Keys to Move</p>
+                <p>SPACE to Jump</p>
+            </div>
+        </div>
+        
+        <div id="game-over-menu" class="menu hidden">
+            <h1 class="game-title">GAME OVER</h1>
+            <div class="final-stats">
+                <p>Floor Reached: <span id="final-floor">0</span></p>
+                <p>Final Score: <span id="final-score">0</span></p>
+                <p>Best Combo: <span id="best-combo">0</span></p>
+            </div>
+            <button id="restart-button" class="menu-button">PLAY AGAIN</button>
+        </div>
+        
+        <div id="hud" class="hidden">
+            <div class="hud-item">Floor: <span id="floor-counter">0</span></div>
+            <div class="hud-item">Score: <span id="score-counter">0</span></div>
+            <div class="hud-item combo-display">
+                <span id="combo-counter">Combo: 0</span>
+                <div class="combo-bar-container">
+                    <div id="combo-bar" class="combo-bar"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="combo-text" class="combo-text"></div>
+    </div>
+    
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
