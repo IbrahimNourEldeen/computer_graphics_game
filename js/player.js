@@ -34,8 +34,8 @@ export class Player {
         this.isJumping = false;
         this.jumpHoldTimer = 0;
         
-        this.superJumpThreshold = 12;
-        this.superJumpMultiplier = 1.8;
+        this.superJumpThreshold = 10;
+        this.superJumpMultiplier = 2.2;
         this.isSuperJump = false;
         this.justWallBounced = false;
         this.wallBounceTimer = 0;
