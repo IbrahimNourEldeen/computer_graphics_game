@@ -38,6 +38,8 @@ export class Game {
         this.discoColorIndex = 0;
         this.discoColorChangeSpeed = 15;
         this.discoColorChangeTimer = 0;
+        this.lastDiscoFloor = 0;
+        this.nextDiscoFloor = 100;
         
         this.ui.updateHighScore(this.highScore);
     }
@@ -67,6 +69,8 @@ export class Game {
         this.discoTimer = 0;
         this.discoColorIndex = 0;
         this.discoColorChangeTimer = 0;
+        this.lastDiscoFloor = 0;
+        this.nextDiscoFloor = 100;
         
         this.player.reset(this.width / 2, this.height - 120);
         this.platformManager.reset();
@@ -141,6 +145,14 @@ export class Game {
                 if (playerFloor > this.currentFloor) {
                     this.score += 10;
                     this.ui.updateScore(this.score);
+                    
+                    if (playerFloor >= this.nextDiscoFloor && playerFloor > this.lastDiscoFloor) {
+                        const duration = this.soundManager.playRecordBreak();
+                        this.discoMode = true;
+                        this.discoTimer = duration / 16.67;
+                        this.lastDiscoFloor = playerFloor;
+                        this.nextDiscoFloor += 50;
+                    }
                 }
                 this.currentFloor = playerFloor;
                 this.ui.updateFloor(this.currentFloor);
@@ -167,12 +179,6 @@ export class Game {
         }
         
         const comboUpdate = this.comboSystem.update(dt);
-        
-        if (comboUpdate.comboEnded && comboUpdate.wasRecord) {
-            const duration = this.soundManager.playRecordBreak();
-            this.discoMode = true;
-            this.discoTimer = duration / 16.67;
-        }
         
         if (this.discoMode) {
             this.discoTimer -= dt;
@@ -256,28 +262,6 @@ export class Game {
                 this.discoMode, 
                 this.discoColors[this.discoColorIndex]
             );
-            
-            if (this.discoMode) {
-                this.ctx.save();
-                
-                const scale = 1 + Math.sin(Date.now() / 200) * 0.05;
-                this.ctx.translate(this.width / 2, 80);
-                this.ctx.scale(scale, scale);
-                
-                this.ctx.shadowColor = this.discoColors[this.discoColorIndex];
-                this.ctx.shadowBlur = 15;
-                
-                this.ctx.font = 'bold 40px Arial';
-                this.ctx.textAlign = 'center';
-                this.ctx.textBaseline = 'middle';
-                this.ctx.fillStyle = '#ffffff';
-                this.ctx.strokeStyle = this.discoColors[this.discoColorIndex];
-                this.ctx.lineWidth = 3;
-                this.ctx.strokeText('DISCO MODE!', 0, 0);
-                this.ctx.fillText('DISCO MODE!', 0, 0);
-                
-                this.ctx.restore();
-            }
             
             const deathScreenY = this.deathFloor - this.camera.y;
             if (deathScreenY < this.height + 100) {
