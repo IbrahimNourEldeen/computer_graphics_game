@@ -22,6 +22,11 @@ export class SoundManager {
         this.loadSound('unbelievable', 'sound/unbelievable.ogg');
         this.loadSound('aight', 'sound/aight.ogg');
         this.loadSound('cheer', 'sound/cheer.ogg');
+        
+        this.bgMusic = new Audio('sound/icy_tower_theme.mp3');
+        this.bgMusic.loop = true;
+        this.bgMusic.volume = 0.3;
+        this.isMusicPlaying = false;
     }
     
     loadSound(name, path) {
@@ -108,5 +113,34 @@ export class SoundManager {
     toggle() {
         this.enabled = !this.enabled;
         return this.enabled;
+    }
+    
+    playBackgroundMusic() {
+        if (!this.isMusicPlaying) {
+            this.bgMusic.play().catch(err => {
+                console.log('Background music could not play:', err);
+            });
+            this.isMusicPlaying = true;
+        }
+    }
+    
+    stopBackgroundMusic() {
+        this.bgMusic.pause();
+        this.bgMusic.currentTime = 0;
+        this.isMusicPlaying = false;
+    }
+    
+    pauseBackgroundMusic() {
+        this.bgMusic.pause();
+        this.isMusicPlaying = false;
+    }
+    
+    resumeBackgroundMusic() {
+        if (!this.isMusicPlaying) {
+            this.bgMusic.play().catch(err => {
+                console.log('Background music could not resume:', err);
+            });
+            this.isMusicPlaying = true;
+        }
     }
 }
