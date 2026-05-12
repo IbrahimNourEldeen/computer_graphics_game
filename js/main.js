@@ -14,7 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('start-button');
     const restartButton = document.getElementById('restart-button');
     
+    let musicStarted = false;
+    
+    const startMusic = () => {
+        if (!musicStarted) {
+            game.soundManager.playBackgroundMusic();
+            musicStarted = true;
+        }
+    };
+    
+    document.addEventListener('click', startMusic, { once: true });
+    document.addEventListener('keydown', startMusic, { once: true });
+    
     startButton.addEventListener('click', () => {
+        startMusic();
         game.start();
     });
     
