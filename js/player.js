@@ -27,8 +27,8 @@ export class Player {
         this.baseJumpPower = 12;
         this.momentumFactor = 0.5;
         this.minJumpPower = 8;
-        this.jumpHoldGravityReduction = 0.4;
-        this.maxJumpHoldTime = 15;
+        this.jumpHoldGravityReduction = 0.3;
+        this.maxJumpHoldTime = 20;
         this.isGrounded = false;
         this.canJump = false;
         this.isJumping = false;
